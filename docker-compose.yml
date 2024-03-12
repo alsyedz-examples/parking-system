@@ -1,0 +1,10 @@
+version: "3.1"
+services:
+  api:
+    image: syednaeem15191/lumen
+    container_name: ${APP_NAME}_api
+    restart: unless-stopped
+    ports:
+      - ${API_PORT}:80
+    volumes:
+      - ./api:/var/www/project
