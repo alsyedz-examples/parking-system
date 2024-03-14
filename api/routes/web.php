@@ -24,5 +24,19 @@ $router->group(['prefix' => 'api', 'namespace' => 'API'], function () use ($rout
 
             $router->get('{id}', 'ParkingSpotController@show');
         });
+
+        $router->group(['prefix' => 'bookings'], function () use ($router) {
+            $router->get('', 'BookingController@index');
+
+            $router->post('', 'BookingController@store');
+
+            $router->group(['prefix' => '{id}'], function () use ($router) {
+                $router->get('', 'BookingController@show');
+
+                $router->put('', 'BookingController@update');
+
+                $router->delete('', 'BookingController@destroy');
+            });
+        });
     });
 });

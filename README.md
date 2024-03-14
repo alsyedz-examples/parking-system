@@ -15,3 +15,5 @@ change environment variables as needed in `.env` & `api/.env`
 for first time install only
 
 > `docker exec -it [api_container_name] php artisan keys:generate:app`
+
+> `docker exec -it [api_container_name] php artisan db:seed`

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -40,6 +39,14 @@ class ParkingSpot extends Model
      */
     protected function getAvailableSlotsAttribute()
     {
-        return [];
+        return $this->bookings()->get();
+    }
+
+    /**
+     * Get the bookings for this parking spot.
+     */
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
     }
 }

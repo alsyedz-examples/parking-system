@@ -4,8 +4,12 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\ParkingSpot;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Response;
 
+/**
+ * @property Builder parkingSpotsQuery
+ */
 class ParkingSpotController extends Controller
 {
     /**
@@ -15,7 +19,7 @@ class ParkingSpotController extends Controller
      */
     public function __construct()
     {
-        $this->parkingSpotQuery = ParkingSpot::query();
+        $this->parkingSpotsQuery = ParkingSpot::query();
     }
 
     /**
@@ -25,7 +29,7 @@ class ParkingSpotController extends Controller
      */
     public function index()
     {
-        return response($this->parkingSpotQuery->paginate(request()->get('length', 15)),200);
+        return response($this->parkingSpotsQuery->paginate(request()->get('length', 15)), 200);
     }
 
     /**
@@ -36,6 +40,6 @@ class ParkingSpotController extends Controller
      */
     public function show($id)
     {
-        return response($this->parkingSpotQuery->findOrFail($id),200);
+        return response($this->parkingSpotsQuery->findOrFail($id), 200);
     }
 }
