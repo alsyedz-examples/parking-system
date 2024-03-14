@@ -16,3 +16,13 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->group(['prefix' => 'api', 'namespace' => 'API'], function () use ($router) {
+    $router->group(['prefix' => 'v1', 'namespace' => 'V1'], function () use ($router) {
+        $router->group(['prefix' => 'parking-spots'], function () use ($router) {
+            $router->get('', 'ParkingSpotController@index');
+
+            $router->get('{id}', 'ParkingSpotController@show');
+        });
+    });
+});
