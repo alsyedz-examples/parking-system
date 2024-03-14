@@ -2,12 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Lumen\Auth\Authorizable;
 
 class ParkingSpot extends Model
 {
@@ -20,5 +16,14 @@ class ParkingSpot extends Model
      */
     protected $fillable = [
         'label', 'price'
+    ];
+
+    /**
+     * The attributes that are type casted.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'price' => 'decimal:2'
     ];
 }
