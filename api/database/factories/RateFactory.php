@@ -23,7 +23,7 @@ class RateFactory extends Factory
     {
         return [
             'day' => $this->faker->word,
-            'price' => $this->faker->numberBetween(10, 25)
+            'price' => $this->faker->numberBetween(1, 9)
         ];
     }
 }
