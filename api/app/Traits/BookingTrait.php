@@ -6,7 +6,6 @@ use App\Models\Booking;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -33,8 +32,10 @@ Trait BookingTrait
      */
     public function getUpdateValidationRules()
     {
+        $now = Carbon::now()->format($this->dateFormat);
+
         return [
-            'start_date' => "bail|required|date_format:$this->dateFormat|before_or_equal:end_date",
+            'start_date' => "bail|required|date_format:$this->dateFormat|before_or_equal:end_date|after_or_equal:$now",
             'end_date' => "bail|required|date_format:$this->dateFormat|after_or_equal:start_date"
         ];
     }
@@ -52,17 +53,23 @@ Trait BookingTrait
 
         $end_date = Carbon::createFromFormat($this->dateFormat, $end_date);
 
-        $bookings = Booking::query()
-            ->where(function (Builder $query) use ($start_date, $end_date) {
+        $bookings = Booking::query();
+
+        $bookings->where('start_date', '>=', Carbon::now()->toDateTimeString());
+
+        $bookings->where(function (Builder $query) use ($start_date, $end_date) {
+            $query->where(function (Builder $query) use ($start_date, $end_date) {
                 $query->where('start_date', '>', $end_date->toDateTimeString());
 
                 $query->where('end_date', '<', $start_date->toDateTimeString());
-            })
-            ->orWhere(function (Builder $query) use ($start_date, $end_date) {
+            });
+
+            $query->orWhere(function (Builder $query) use ($start_date, $end_date) {
                 $query->where('start_date', '<', $end_date->toDateTimeString());
 
                 $query->where('end_date', '>', $start_date->toDateTimeString());
             });
+        });
 
         if ($ignore_id) {
             $bookings->where('id', '!=', $ignore_id);
