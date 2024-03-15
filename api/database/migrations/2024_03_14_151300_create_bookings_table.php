@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->datetime('start_date');
             $table->datetime('end_date');
+            $table->double('price');
             $table->foreignId('parking_spot_id')->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
