@@ -43,17 +43,20 @@ Trait BookingTrait
     /**
      * @param $start_date
      * @param $end_date
+     * @param $parking_spot_id
      * @param $ignore_id
      * @return void
      * @throws BadRequestHttpException
      */
-    public function throwIfSlotIsNotAvailable($start_date, $end_date, $ignore_id = null)
+    public function throwIfSlotIsNotAvailable($start_date, $end_date, $parking_spot_id, $ignore_id = null)
     {
         $start_date = Carbon::createFromFormat($this->dateFormat, $start_date);
 
         $end_date = Carbon::createFromFormat($this->dateFormat, $end_date);
 
         $bookings = Booking::query();
+
+        $bookings->where('parking_spot_id', '=', $parking_spot_id);
 
         $bookings->where('start_date', '>=', Carbon::now()->toDateTimeString());
 
