@@ -19,6 +19,12 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'api', 'namespace' => 'API'], function () use ($router) {
     $router->group(['prefix' => 'v1', 'namespace' => 'V1'], function () use ($router) {
+        $router->group(['prefix' => 'rates'], function () use ($router) {
+            $router->get('', 'RateController@index');
+
+            $router->get('{id}', 'RateController@show');
+        });
+
         $router->group(['prefix' => 'parking-spots'], function () use ($router) {
             $router->get('', 'ParkingSpotController@index');
 
