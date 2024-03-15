@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Booking;
+use App\Observers\BookingObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,5 +16,13 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+    }/**
+ * Bootstrap any application services.
+ *
+ * @return void
+ */
+    public function boot()
+    {
+        Booking::observe(BookingObserver::class);
     }
 }
