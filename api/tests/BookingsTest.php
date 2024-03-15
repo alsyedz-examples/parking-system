@@ -23,6 +23,7 @@ class BookingsTest extends TestCase
         $this->artisan('db:seed');
 
 
+        // we should see a paginated response
         $response = $this->get('/api/v1/bookings', ['Accept' => 'application/json']);
         $response->assertResponseOk();
         $response->seeJsonStructure(['data']);
@@ -39,6 +40,7 @@ class BookingsTest extends TestCase
         $this->artisan('db:seed');
 
 
+        // we should be able to add a fresh record.
         $start_date = Carbon::now();
         $end_date = Carbon::now()->addMinutes(20);
         $response = $this->post('/api/v1/bookings', [
@@ -50,6 +52,7 @@ class BookingsTest extends TestCase
         $response->seeJsonStructure(['id', 'start_date', 'end_date']);
 
 
+        // we should not be able to add a our booking. Reason: Slot already booked.
         $start_date->addMinutes(10);
         $end_date->addMinutes(10);
         $response = $this->post('/api/v1/bookings', [
@@ -61,6 +64,7 @@ class BookingsTest extends TestCase
         $response->seeJsonStructure(['message']);
 
 
+        // we should be able to add a our booking (using same date & time). Reason: Different spot.
         $response = $this->post('/api/v1/bookings', [
             "start_date" => $start_date->format($this->dateFormat),
             "end_date" => $end_date->format($this->dateFormat),
@@ -70,6 +74,7 @@ class BookingsTest extends TestCase
         $response->seeJsonStructure(['id', 'start_date', 'end_date']);
 
 
+        // we should be able to add a our booking (using same date & time).
         $start_date->addHours(1);
         $end_date->addHours(1);
         $response = $this->post('/api/v1/bookings', [
@@ -101,6 +106,7 @@ class BookingsTest extends TestCase
         ], ['Accept' => 'application/json']);
 
 
+        // we should be able to add a get our booking.
         $response = $this->get('/api/v1/bookings/1', ['Accept' => 'application/json']);
         $response->assertResponseOk();
         $response->seeJsonStructure(['id', 'start_date', 'end_date']);
@@ -117,6 +123,7 @@ class BookingsTest extends TestCase
         $this->artisan('db:seed');
 
 
+        // we should not be able to get out booking. Reason: Booking doesn't exist.
         $response = $this->get('/api/v1/bookings/1', ['Accept' => 'application/json']);
         $response->assertResponseStatus(404);
         $response->seeJsonStructure(['message']);
@@ -149,6 +156,7 @@ class BookingsTest extends TestCase
         ], ['Accept' => 'application/json']);
 
 
+        // we should not be able to add a our booking. Reason: Slot already booked.
         $response = $this->put('/api/v1/bookings/1', [
             "start_date" => $start_date->format($this->dateFormat),
             "end_date" => $end_date->format($this->dateFormat),
@@ -157,6 +165,7 @@ class BookingsTest extends TestCase
         $response->seeJsonStructure(['message']);
 
 
+        // we should be able to add a our booking.
         $start_date->addMinutes(10);
         $end_date->addMinutes(10);
         $response = $this->put('/api/v1/bookings/1', [
