@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\ParkingSpot;
 use Illuminate\Database\Seeder;
 
-class ParkingSpotTableSeeder extends Seeder
+class ParkingSpotsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('parking_spots', function (Blueprint $table) {
             $table->id();
             $table->string('label');
-            $table->double('price');
             $table->timestamps();
         });
     }

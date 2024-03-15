@@ -15,32 +15,8 @@ class ParkingSpot extends Model
      * @var string[]
      */
     protected $fillable = [
-        'label', 'price'
+        'label'
     ];
-
-    /**
-     * The attributes that are type casted.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'price' => 'decimal:2'
-    ];
-
-    /**
-     * The attributes that append to the model.
-     *
-     * @var array<string>
-     */
-    protected $appends = ['booked_slots'];
-
-    /**
-     * get available slots.
-     */
-    protected function getBookedSlotsAttribute()
-    {
-        return $this->bookings()->get();
-    }
 
     /**
      * Get the bookings for this parking spot.

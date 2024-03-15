@@ -22,8 +22,7 @@ class ParkingSpotFactory extends Factory
     public function definition()
     {
         return [
-            'label' => $this->faker->word,
-            'price' => $this->faker->numberBetween(10, 25)
+            'label' => $this->faker->word
         ];
     }
 }
