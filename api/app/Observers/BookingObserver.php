@@ -3,18 +3,28 @@
 namespace App\Observers;
 
 use App\Models\Booking;
+use App\Models\Rate;
+use Carbon\Carbon;
 
 class BookingObserver
 {
     /**
-     * Handle the Booking "creating", "updating" event.
+     * Handle the Booking "creating" & "updating" event.
      *
      * @param Booking $booking
      * @return void
      */
     public function saving(Booking $booking)
     {
-        //
+        $start_date = Carbon::create($booking->start_date);
+
+        $end_date = Carbon::create($booking->end_date);
+
+        $total_minutes = $end_date->diffInMinutes($start_date);
+
+        $rate = Rate::query()->where('day', '=', $start_date->dayName)->first();
+
+        $booking->price = $total_minutes * $rate->price;
     }
 
     /**
