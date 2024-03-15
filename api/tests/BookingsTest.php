@@ -49,7 +49,7 @@ class BookingsTest extends TestCase
             "parking_spot_id" => "1"
         ], ['Accept' => 'application/json']);
         $response->assertResponseOk();
-        $response->seeJsonStructure(['id', 'start_date', 'end_date']);
+        $response->seeJsonStructure(['id', 'start_date', 'end_date', 'price']);
 
 
         // we should not be able to add a our booking. Reason: Slot already booked.
@@ -71,7 +71,7 @@ class BookingsTest extends TestCase
             "parking_spot_id" => "2"
         ], ['Accept' => 'application/json']);
         $response->assertResponseStatus(200);
-        $response->seeJsonStructure(['id', 'start_date', 'end_date']);
+        $response->seeJsonStructure(['id', 'start_date', 'end_date', 'price']);
 
 
         // we should be able to add a our booking (using same date & time).
@@ -83,7 +83,7 @@ class BookingsTest extends TestCase
             "parking_spot_id" => "1"
         ], ['Accept' => 'application/json']);
         $response->assertResponseStatus(200);
-        $response->seeJsonStructure(['id', 'start_date', 'end_date']);
+        $response->seeJsonStructure(['id', 'start_date', 'end_date', 'price']);
     }
 
     /**
@@ -109,7 +109,7 @@ class BookingsTest extends TestCase
         // we should be able to add a get our booking.
         $response = $this->get('/api/v1/bookings/1', ['Accept' => 'application/json']);
         $response->assertResponseOk();
-        $response->seeJsonStructure(['id', 'start_date', 'end_date']);
+        $response->seeJsonStructure(['id', 'start_date', 'end_date', 'price']);
     }
 
     /**
@@ -173,6 +173,6 @@ class BookingsTest extends TestCase
             "end_date" => $end_date->format($this->dateFormat),
         ], ['Accept' => 'application/json']);
         $response->assertResponseStatus(200);
-        $response->seeJsonStructure(['id', 'start_date', 'end_date']);
+        $response->seeJsonStructure(['id', 'start_date', 'end_date', 'price']);
     }
 }
