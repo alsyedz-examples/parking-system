@@ -6,6 +6,7 @@ use App\Models\Booking;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -18,22 +19,34 @@ Trait BookingTrait
     /**
      * @return array
      */
-    public function getValidationRules()
+    public function getCreateValidationRules()
+    {
+        $rules = $this->getUpdateValidationRules();
+
+        $rules['parking_spot_id'] = 'bail|required|exists:App\Models\ParkingSpot,id';
+
+        return $rules;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUpdateValidationRules()
     {
         return [
             'start_date' => "bail|required|date_format:$this->dateFormat|before_or_equal:end_date",
-            'end_date' => "bail|required|date_format:$this->dateFormat|after_or_equal:start_date",
-            'parking_spot_id' => 'bail|required|exists:App\Models\ParkingSpot,id'
+            'end_date' => "bail|required|date_format:$this->dateFormat|after_or_equal:start_date"
         ];
     }
 
     /**
      * @param $start_date
      * @param $end_date
+     * @param $ignore_id
      * @return void
      * @throws BadRequestHttpException
      */
-    public function throwIfSlotIsNotAvailable($start_date, $end_date)
+    public function throwIfSlotIsNotAvailable($start_date, $end_date, $ignore_id = null)
     {
         $start_date = Carbon::createFromFormat($this->dateFormat, $start_date);
 
@@ -51,8 +64,12 @@ Trait BookingTrait
                 $query->where('end_date', '>', $start_date->toDateTimeString());
             });
 
+        if ($ignore_id) {
+            $bookings->where('id', '!=', $ignore_id);
+        }
+
         if ($bookings->exists()) {
-            throw new BadRequestHttpException('asdgsadgsagd');
+            throw new BadRequestHttpException("Selected slot is not available.");
         }
     }
 }

@@ -25,6 +25,8 @@ class BookingController extends Controller
     public function __construct()
     {
         $this->bookingsQuery = booking::query();
+
+        $this->bookingsQuery->orderBy('start_date');
     }
 
     /**
@@ -46,7 +48,7 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $this->validate($request, $this->getValidationRules());
+        $validated = $this->validate($request, $this->getCreateValidationRules());
 
         $this->throwIfSlotIsNotAvailable($validated['start_date'], $validated['end_date']);
 
@@ -74,11 +76,11 @@ class BookingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $this->validate($request, $this->getValidationRules());
-
-        $this->throwIfSlotIsNotAvailable($validated['start_date'], $validated['end_date']);
-
         $booking = $this->bookingsQuery->findOrFail($id);
+
+        $validated = $this->validate($request, $this->getUpdateValidationRules());
+
+        $this->throwIfSlotIsNotAvailable($validated['start_date'], $validated['end_date'], $booking->id);
 
         $booking->update($validated);
 
