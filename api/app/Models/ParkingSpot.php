@@ -32,12 +32,12 @@ class ParkingSpot extends Model
      *
      * @var array<string>
      */
-    protected $appends = ['available_slots'];
+    protected $appends = ['booked_slots'];
 
     /**
      * get available slots.
      */
-    protected function getAvailableSlotsAttribute()
+    protected function getBookedSlotsAttribute()
     {
         return $this->bookings()->get();
     }
