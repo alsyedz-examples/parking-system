@@ -30,7 +30,7 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "phpunit": [
-            "./vendor/bin/phpunit --debug"
+            "./vendor/bin/phpunit --stop-on-failure"
         ]
     },
     "config": {
