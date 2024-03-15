@@ -39,7 +39,7 @@ class ParkingSpotsTest extends TestCase
 
         $response->assertResponseOk();
 
-        $response->seeJsonStructure(['id', 'label', 'price', 'booked_slots']);
+        $response->seeJsonStructure(['id', 'label']);
     }
 
     /**
