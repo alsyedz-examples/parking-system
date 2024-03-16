@@ -7,11 +7,10 @@ B(Rates per day)
 C(Parking spots API)
 D(Parking spaces)
 E(Bookings API)
-F(Booked parking slots)
 
 A -- returns --> B
 C -- returns --> D
-E -- returns --> F
+E -- returns --> D
 E -- reserves --> D
 ```
 
