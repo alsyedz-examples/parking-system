@@ -6,6 +6,7 @@ use App\Models\Booking;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -50,13 +51,26 @@ Trait BookingTrait
      */
     public function throwIfBookingSlotIsNotAvailable($start_date, $end_date, $parking_spot_id, $ignore_id = null)
     {
+        $bookings = $this->getBookingSlotsForADateRange($start_date, $end_date, $ignore_id);
+
+        if ($bookings->firstWhere('parking_spot_id', '=', $parking_spot_id)) {
+            throw new BadRequestHttpException("Selected slot is not available.");
+        }
+    }
+
+    /**
+     * @param $start_date
+     * @param $end_date
+     * @param null $ignore_id
+     * @return Collection
+     */
+    public function getBookingSlotsForADateRange($start_date, $end_date, $ignore_id = null)
+    {
         $start_date = Carbon::createFromFormat($this->dateFormat, $start_date);
 
         $end_date = Carbon::createFromFormat($this->dateFormat, $end_date);
 
         $bookings = Booking::query();
-
-        $bookings->where('parking_spot_id', '=', $parking_spot_id);
 
         $bookings->where('start_date', '>=', Carbon::now()->toDateTimeString());
 
@@ -78,8 +92,6 @@ Trait BookingTrait
             $bookings->where('id', '!=', $ignore_id);
         }
 
-        if ($bookings->exists()) {
-            throw new BadRequestHttpException("Selected slot is not available.");
-        }
+        return $bookings->get();
     }
 }
