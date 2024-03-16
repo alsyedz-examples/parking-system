@@ -19,3 +19,11 @@ for first time install only
 > `docker exec -it [api_container_name] php artisan keys:generate:app`
 
 > `docker exec -it [api_container_name] php artisan db:seed`
+
+## Sequence Diagram
+
+```mermaid
+graph LR
+A[Rates API] -- to view --> B(View rates per day)
+C(Parking spot API) -- to view --> D(View available parking slots)
+```
