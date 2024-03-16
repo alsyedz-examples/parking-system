@@ -10,8 +10,6 @@ class BookingsTest extends TestCase
 {
     use DatabaseMigrations;
 
-    protected $dateFormat = DateTime::ISO8601;
-
     /**
      * A basic test example.
      *

@@ -31,6 +31,8 @@ $router->group(['prefix' => 'api', 'namespace' => 'API'], function () use ($rout
             $router->get('{id}', 'ParkingSpotController@show');
         });
 
+        $router->post('search', 'SearchController@search');
+
         $router->group(['prefix' => 'bookings'], function () use ($router) {
             $router->get('', 'BookingController@index');
 
