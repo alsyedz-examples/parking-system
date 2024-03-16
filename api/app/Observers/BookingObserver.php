@@ -22,8 +22,6 @@ class BookingObserver
 
         foreach (getMinutesPerDay($booking->start_date, $booking->end_date) as $day => $minutes) {
             $price = $minutes * $rates[$day];
-
-            Log::debug("$day => $price");
         }
 
         $booking->price = $price;
