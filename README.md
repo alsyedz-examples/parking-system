@@ -2,10 +2,17 @@
 
 ```mermaid
 graph LR
-A[Rates API] -- returns --> B(Rates per day)
-C(Parking spots API) -- returns --> D(Parking spaces)
-E(Bookings API) -- returns --> F(Booked parking slots)
-E(Bookings API) -- reserves --> D(Available parking spaces)
+A[Rates API]
+B(Rates per day)
+C(Parking spots API)
+D(Parking spaces)
+E(Bookings API)
+F(Booked parking slots)
+
+A -- returns --> B
+C -- returns --> D
+E -- returns --> F
+E -- reserves --> D
 ```
 
 # To run the project
