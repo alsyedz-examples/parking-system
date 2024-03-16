@@ -26,5 +26,5 @@ for first time install only
 graph LR
 A[Rates API] -- to view --> B(View rates per day)
 C(Parking spots API) -- to view --> D(View available parking spaces)
-C(Bookings API) -- to view --> E(View all booked parking slots)
+E(Bookings API) -- to view --> F(View all booked parking slots)
 ```
