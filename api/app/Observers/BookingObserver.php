@@ -4,7 +4,7 @@ namespace App\Observers;
 
 use App\Models\Booking;
 use App\Models\Rate;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class BookingObserver
 {
@@ -16,15 +16,17 @@ class BookingObserver
      */
     public function saving(Booking $booking)
     {
-        $start_date = Carbon::create($booking->start_date);
+        $rates = Rate::query()->pluck('price', 'day');
 
-        $end_date = Carbon::create($booking->end_date);
+        $price = 0;
 
-        $total_minutes = $end_date->diffInMinutes($start_date);
+        foreach (getMinutesPerDay($booking->start_date, $booking->end_date) as $day => $minutes) {
+            $price = $minutes * $rates[$day];
 
-        $rate = Rate::query()->where('day', '=', $start_date->dayName)->first();
+            Log::debug("$day => $price");
+        }
 
-        $booking->price = $total_minutes * $rate->price;
+        $booking->price = $price;
     }
 
     /**
