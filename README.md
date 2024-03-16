@@ -24,7 +24,7 @@ for first time install only
 
 ```mermaid
 graph LR
-A[Rates API] -- returns --> (Rates per day)
+A[Rates API] -- returns --> B(Rates per day)
 C(Parking spots API) -- returns --> D(Available parking spaces)
 E(Bookings API) -- returns --> F(Booked parking slots)
 E(Bookings API) -- reserves --> D(Available parking spaces)
