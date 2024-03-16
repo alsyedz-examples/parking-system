@@ -12,6 +12,7 @@ A -- returns --> B
 C -- returns --> D
 E -- returns --> D
 E -- reserves --> D
+E -- cancels --> D
 E -- calculates --> B
 ```
 
