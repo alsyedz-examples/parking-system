@@ -50,7 +50,7 @@ class BookingController extends Controller
     {
         $validated = $this->validate($request, $this->getCreateValidationRules());
 
-        $this->throwIfSlotIsNotAvailable($validated['start_date'], $validated['end_date'], $validated['parking_spot_id']);
+        $this->throwIfBookingSlotIsNotAvailable($validated['start_date'], $validated['end_date'], $validated['parking_spot_id']);
 
         return response($this->bookingsQuery->create($validated), 200);
     }
@@ -80,7 +80,7 @@ class BookingController extends Controller
 
         $validated = $this->validate($request, $this->getUpdateValidationRules());
 
-        $this->throwIfSlotIsNotAvailable($validated['start_date'], $validated['end_date'], $booking->parking_spot_id, $booking->id);
+        $this->throwIfBookingSlotIsNotAvailable($validated['start_date'], $validated['end_date'], $booking->parking_spot_id, $booking->id);
 
         $booking->update($validated);
 
