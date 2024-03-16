@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\booking;
+use App\Models\Booking;
 use App\Traits\BookingTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -24,7 +24,7 @@ class BookingController extends Controller
      */
     public function __construct()
     {
-        $this->bookingsQuery = booking::query();
+        $this->bookingsQuery = Booking::query();
 
         $this->bookingsQuery->orderBy('start_date');
     }
