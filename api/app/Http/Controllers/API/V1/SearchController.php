@@ -41,7 +41,6 @@ class SearchController extends Controller
 
         $bookings = $this->getBookingSlotsForADateRange($validated['start_date'], $validated['end_date']);
 
-//        return response($bookings, 200);
         return response($bookings->map(function(Booking $booking) {
             return [
                 'parking_spot_id' => $booking->parking_spot_id,
