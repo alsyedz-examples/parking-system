@@ -12,7 +12,7 @@ A -- returns --> B
 C -- returns --> D
 E -- returns --> D
 E -- reserves --> D
-E -- calculates --> A
+E -- calculates --> B
 ```
 
 # To run the project
