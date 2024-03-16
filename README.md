@@ -7,13 +7,15 @@ B(Rates per day)
 C(Parking spots API)
 D(Parking spaces)
 E(Bookings API)
+F(Search API)
 
-A -- returns --> B
-C -- returns --> D
-E -- returns --> D
+A -- fetches --> B
+C -- fetches --> D
+E -- fetches --> D
 E -- reserves --> D
 E -- cancels --> D
 E -- calculates --> B
+F -- fetches --> E
 ```
 
 # To run the project
