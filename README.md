@@ -15,7 +15,7 @@ E -- fetches --> D
 E -- reserves --> D
 E -- cancels --> D
 E -- calculates --> B
-F -- fetches --> E
+F -- fetches --> D
 ```
 
 # To run the project
