@@ -27,4 +27,5 @@ graph LR
 A[Rates API] -- returns --> B(View rates per day)
 C(Parking spots API) -- returns --> D(View available parking spaces)
 E(Bookings API) -- returns --> F(View booked parking slots)
+E(Bookings API) -- reserves --> D(Available parking space)
 ```
