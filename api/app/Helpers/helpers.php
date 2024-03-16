@@ -24,7 +24,7 @@ if (!function_exists('getMinutesPerDay')) {
             $days[$day][] = $end->diffInMinutes($start);
         } else {
             while (!$start->isSameDay($end)) {
-                $days[$start->dayName][] = $start->diffInMinutes($start->clone()->endOfDay());
+                $days[$start->dayName][] = ($start->diffInMinutes($start->clone()->endOfDay()) + 1); // add a minute since end of day is at 59 minutes
 
                 $start->addDay()->startOfDay();
             }
