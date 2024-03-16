@@ -1,3 +1,13 @@
+## Sequence Diagram
+
+```mermaid
+graph LR
+A[Rates API] -- returns --> B(Rates per day)
+C(Parking spots API) -- returns --> D(Parking spaces)
+E(Bookings API) -- returns --> F(Booked parking slots)
+E(Bookings API) -- reserves --> D(Available parking spaces)
+```
+
 # To run the project
 
 > `cp .env.example .env`
@@ -19,13 +29,3 @@ for first time install only
 > `docker exec -it [api_container_name] php artisan keys:generate:app`
 
 > `docker exec -it [api_container_name] php artisan db:seed`
-
-## Sequence Diagram
-
-```mermaid
-graph LR
-A[Rates API] -- returns --> B(Rates per day)
-C(Parking spots API) -- returns --> D(Parking spaces)
-E(Bookings API) -- returns --> F(Booked parking slots)
-E(Bookings API) -- reserves --> D(Available parking spaces)
-```
